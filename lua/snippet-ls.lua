@@ -128,7 +128,7 @@ local function new_server()
 	local function server(dispatchers)
 		local closing = false
 		local srv = {}
-		function srv.request(method, params, handler)
+		srv.request = vim.schedule_wrap(function(method, params, handler)
 			if method == 'initialize' then
 				handler(nil, {
 					capabilities = {
@@ -140,7 +140,7 @@ local function new_server()
 			elseif method == 'shutdown' then
 				handler(nil, nil)
 			end
-		end
+		end)
 		function srv.notify(method, _)
 			if method == 'exit' then
 				dispatchers.on_exit(0, 15)
