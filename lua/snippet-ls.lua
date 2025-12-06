@@ -103,7 +103,7 @@ local function get_lsp_snippets(params)
 	end
 
 	local line = vim.api.nvim_buf_get_lines(bufnr, row, row + 1, true)[1]
-	local before_cursor = line:sub(1, col)
+	local before_cursor = vim.fn.strcharpart(line, 0, col)
 
 	-- 空行または空白のみの場合は補完候補を返さない
 	if before_cursor:match('^%s*$') then
